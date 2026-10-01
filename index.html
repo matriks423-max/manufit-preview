@@ -57,7 +57,8 @@ h1, h2, h3, p { margin: 0; }
 :focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
 
 .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
-.h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 6vw, 92px); line-height: 0.9; letter-spacing: -0.005em; text-wrap: balance; }
+.h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(44px, 6vw, 92px); line-height: 1; letter-spacing: -0.005em; text-wrap: balance; }
+/* Latvian capitals carry macrons/carons above the cap height: below line-height 1 they merge into the line above (MŪSU read as MUSU). */
 .lead { color: var(--muted); max-width: 54ch; font-size: clamp(17px, 1.25vw, 19px); }
 
 /* Buttons: one rectangular 2px system everywhere */
@@ -107,7 +108,7 @@ h1, h2, h3, p { margin: 0; }
 .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 .hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, color-mix(in oklch, var(--bg) 55%, transparent) 0%, transparent 28%, color-mix(in oklch, var(--bg) 62%, transparent) 55%, var(--bg) 96%); }
 .hero__content { width: 100%; padding: calc(var(--nav-h) + 48px) var(--gutter) 32px; }
-.hero__title { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(60px, 16.5vw, 124px); line-height: 0.86; letter-spacing: -0.01em; margin-bottom: 22px; }
+.hero__title { font-family: var(--font-display); font-weight: 900; text-transform: uppercase; font-size: clamp(60px, 16.5vw, 124px); line-height: 0.94; letter-spacing: -0.01em; margin-bottom: 22px; }
 /* The reveal mask clips, so give Latvian capital macrons (Ē, Ā, Ī) room above the 0.86 line box. */
 .hero__title .line { display: block; overflow: hidden; padding: 0.16em 0 0.03em; margin-top: -0.16em; }
 .hero__title .line > span { display: block; }
@@ -128,8 +129,15 @@ h1, h2, h3, p { margin: 0; }
 
 @media (min-width: 1024px) {
   .hero { grid-template-columns: minmax(0, 1fr) minmax(400px, 38vw); align-items: stretch; }
-  .hero__media { position: relative; inset: auto; grid-column: 2; grid-row: 1; z-index: 0; min-height: 100dvh; }
-  .hero__media::after { background: linear-gradient(90deg, var(--bg) 0%, color-mix(in oklch, var(--bg) 40%, transparent) 18%, transparent 42%), linear-gradient(0deg, color-mix(in oklch, var(--bg) 70%, transparent) 0%, transparent 34%); }
+  /* A dimmed photo of the turf track fills the whole hero, so wide screens never show a dead black margin left of the text. */
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("assets/img/hero-bg.webp") 50% 58% / cover no-repeat; }
+  .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background:
+      radial-gradient(ellipse 55% 65% at 32% 64%, color-mix(in oklch, var(--bg) 58%, transparent), transparent 72%),
+      linear-gradient(90deg, color-mix(in oklch, var(--bg) 70%, transparent) 0%, color-mix(in oklch, var(--bg) 64%, transparent) 55%, color-mix(in oklch, var(--bg) 48%, transparent) 100%),
+      linear-gradient(0deg, var(--bg) 0%, transparent 28%); }
+  .hero__media { position: relative; inset: auto; grid-column: 2; grid-row: 1; z-index: 0; min-height: 100dvh; background: transparent;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%); mask-image: linear-gradient(90deg, transparent 0%, #000 34%); }
+  .hero__media::after { background: linear-gradient(0deg, color-mix(in oklch, var(--bg) 70%, transparent) 0%, transparent 34%); }
   .hero__content { grid-column: 1; grid-row: 1; align-self: end; padding: calc(var(--nav-h) + 48px) 48px 12vh var(--edge); }
   .hero__title { font-size: clamp(76px, 8.1vw, 128px); }
   .next-card { position: absolute; z-index: 2; bottom: 12vh; right: calc(max(400px, 38vw) - 290px); margin: 0; }
@@ -197,7 +205,7 @@ h1, h2, h3, p { margin: 0; }
 .lane-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid color-mix(in oklch, var(--text) 20%, transparent); }
 .lane { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 92px; gap: 6px 24px; width: 100%; padding: 24px 0; border: 0; border-bottom: 1px solid color-mix(in oklch, var(--text) 20%, transparent); background: none; color: var(--text); text-align: left; text-decoration: none; cursor: pointer; }
 .lane::before { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; transition: transform 640ms var(--ease-out); }
-.lane__name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(32px, 3.6vw, 54px); line-height: 0.95; }
+.lane__name { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(32px, 3.6vw, 54px); line-height: 1; }
 .lane__desc { color: var(--muted); font-size: 16px; max-width: 46ch; }
 .lane__when { font-weight: 600; font-size: 15px; }
 .lane__when span { display: block; color: var(--muted); font-weight: 500; }
@@ -220,7 +228,7 @@ h1, h2, h3, p { margin: 0; }
 .first__intro { display: grid; gap: 22px; justify-items: start; align-content: start; }
 .faq { border-bottom: 1px solid var(--line); }
 .faq details { border-top: 1px solid var(--line); }
-.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 26px 0; list-style: none; cursor: pointer; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(26px, 2.7vw, 40px); line-height: 1; }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 26px 0; list-style: none; cursor: pointer; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(26px, 2.7vw, 40px); line-height: 1.06; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary i { flex: none; font-size: 22px; transition: transform 260ms var(--ease-out); }
 .faq details[open] summary i { transform: rotate(45deg); }
@@ -275,7 +283,8 @@ h1, h2, h3, p { margin: 0; }
 dialog { padding: 0; border: 0; background: transparent; color: inherit; max-width: none; max-height: none; }
 dialog::backdrop { background: color-mix(in oklch, var(--bg) 72%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
 .sheet { position: fixed; inset: 0 0 0 auto; width: min(520px, 100%); height: 100dvh; margin: 0 0 0 auto; }
-.sheet__panel { height: 100%; overflow-y: auto; overscroll-behavior: contain; background: var(--surface); border-left: 1px solid var(--line); padding: 24px clamp(20px, 3vw, 36px) 40px; opacity: 0; transform: translateX(28px); transition: transform 320ms var(--ease-out), opacity 220ms var(--ease-out); }
+/* overflow-wrap: visitor-typed text (long names, emails) must never widen the sheet. */
+.sheet__panel { overflow-wrap: anywhere; height: 100%; overflow-y: auto; overscroll-behavior: contain; background: var(--surface); border-left: 1px solid var(--line); padding: 24px clamp(20px, 3vw, 36px) 40px; opacity: 0; transform: translateX(28px); transition: transform 320ms var(--ease-out), opacity 220ms var(--ease-out); }
 .sheet.is-open .sheet__panel { opacity: 1; transform: none; }
 @media (max-width: 767px) {
   .sheet { inset: auto 0 0 0; width: 100%; height: auto; max-height: 94dvh; margin: auto 0 0; }
@@ -283,7 +292,7 @@ dialog::backdrop { background: color-mix(in oklch, var(--bg) 72%, transparent); 
 }
 .sheet__head { display: flex; align-items: start; justify-content: space-between; gap: 16px; padding-bottom: 22px; margin-bottom: 24px; border-bottom: 1px solid var(--line); }
 .sheet__when { font-size: 14px; font-weight: 600; color: var(--muted); }
-.sheet__title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 40px; line-height: 0.95; margin: 6px 0 8px; }
+.sheet__title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 40px; line-height: 1; margin: 6px 0 8px; }
 .sheet__spots { font-size: 15px; color: var(--muted); }
 .sheet__spots.is-low, .sheet__spots.is-full { color: var(--accent-ink); font-weight: 600; }
 .group { border: 0; margin: 0 0 6px; padding: 0; }
@@ -310,7 +319,7 @@ dialog::backdrop { background: color-mix(in oklch, var(--bg) 72%, transparent); 
 .proto-note { margin-top: 14px; font-size: 13px; color: var(--faint); }
 .done { display: grid; gap: 14px; justify-items: start; }
 .done > i { font-size: 44px; color: var(--accent-ink); }
-.done h3 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 44px; line-height: 0.95; }
+.done h3 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 44px; line-height: 1; }
 .done p { color: var(--muted); }
 .done dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 18px; margin: 8px 0; font-size: 15px; }
 .done dt { color: var(--faint); }

@@ -76,12 +76,13 @@ button, input, select { font: inherit; color: inherit; }
   .side nav a[aria-current="page"] { color: var(--text); background: color-mix(in oklch, var(--text) 7%, transparent); box-shadow: inset 2px 0 0 var(--accent); }
   .side__foot { margin-top: auto; display: grid; gap: 10px; padding: 0 8px; font-size: 13px; color: var(--faint); }
   .side__foot a { color: var(--muted); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
-  .main { padding: 36px 44px 64px; }
+  /* Centred in the column so wide monitors don't leave a dead area on the right. */
+  .main { padding: 36px 44px 64px; max-width: 1240px; margin-inline: auto; }
 }
 
 /* Page pieces */
 .page-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 24px; }
-.page-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(34px, 5vw, 52px); line-height: 0.95; }
+.page-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(34px, 5vw, 52px); line-height: 1; }
 .page-sub { color: var(--muted); margin-top: 6px; }
 .panel { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--r); }
 .panel__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line-soft); }

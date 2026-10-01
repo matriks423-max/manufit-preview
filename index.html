@@ -129,12 +129,12 @@ h1, h2, h3, p { margin: 0; }
 
 @media (min-width: 1024px) {
   .hero { grid-template-columns: minmax(0, 1fr) minmax(400px, 38vw); align-items: stretch; }
-  /* A dimmed photo of the turf track fills the whole hero, so wide screens never show a dead black margin left of the text. */
-  .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("assets/img/hero-bg.webp") 50% 58% / cover no-repeat; }
+  /* An out-of-focus copy of the hero footage fills the whole hero: no dead black margin on wide screens, and no
+     awkward crop of a person at any aspect ratio (a sharp people photo here looked strange on wide, short screens). */
+  .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("assets/img/hero-ambient.webp") 50% 50% / cover no-repeat; }
   .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background:
-      radial-gradient(ellipse 55% 65% at 32% 64%, color-mix(in oklch, var(--bg) 58%, transparent), transparent 72%),
-      linear-gradient(90deg, color-mix(in oklch, var(--bg) 70%, transparent) 0%, color-mix(in oklch, var(--bg) 64%, transparent) 55%, color-mix(in oklch, var(--bg) 48%, transparent) 100%),
-      linear-gradient(0deg, var(--bg) 0%, transparent 28%); }
+      linear-gradient(90deg, color-mix(in oklch, var(--bg) 70%, transparent) 0%, color-mix(in oklch, var(--bg) 57%, transparent) 50%, color-mix(in oklch, var(--bg) 36%, transparent) 100%),
+      linear-gradient(0deg, var(--bg) 0%, transparent 30%); }
   .hero__media { position: relative; inset: auto; grid-column: 2; grid-row: 1; z-index: 0; min-height: 100dvh; background: transparent;
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 34%); mask-image: linear-gradient(90deg, transparent 0%, #000 34%); }
   .hero__media::after { background: linear-gradient(0deg, color-mix(in oklch, var(--bg) 70%, transparent) 0%, transparent 34%); }

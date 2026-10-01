@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MANUFIT admin · Prototips</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141110">
+<link rel="icon" href="assets/brand/manufit-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Big+Shoulders+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+/* MANUFIT admin prototype: same tokens as the site, app-shell layout, phone first. */
+:root {
+  --bg: oklch(13.5% 0.006 30);
+  --surface: oklch(17.5% 0.007 30);
+  --surface-2: oklch(21% 0.008 30);
+  --line: oklch(30% 0.008 30);
+  --line-soft: oklch(24.5% 0.007 30);
+  --text: oklch(95.5% 0.006 80);
+  --muted: oklch(73% 0.012 60);
+  --faint: oklch(61% 0.01 60);
+  --accent: oklch(53% 0.205 27);
+  --accent-hover: oklch(57.5% 0.21 27);
+  --accent-ink: oklch(67% 0.19 27);
+  --on-accent: oklch(98.5% 0.004 80);
+  --ok: oklch(74% 0.13 150);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --r: 2px;
+  --font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --font-body: "Archivo", system-ui, -apple-system, sans-serif;
+  --side: 248px;
+  --tabbar: 64px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 15px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p { margin: 0; }
+a { color: inherit; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 16px; border: 1px solid transparent; border-radius: var(--r); font-weight: 600; font-size: 14px; white-space: nowrap; text-decoration: none; cursor: pointer; transition: transform 160ms var(--ease-out), background-color 200ms var(--ease-out), border-color 200ms var(--ease-out); }
+.btn:active { transform: scale(0.97); }
+.btn--primary { background: var(--accent); color: var(--on-accent); }
+.btn--ghost { border-color: var(--line); background: transparent; }
+.btn[disabled] { opacity: 0.7; cursor: progress; }
+@media (hover: hover) and (pointer: fine) { .btn--primary:hover { background: var(--accent-hover); } .btn--ghost:hover { border-color: var(--text); } }
+
+/* Shell */
+.shell { min-height: 100dvh; padding-bottom: var(--tabbar); }
+.side { display: none; }
+.topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 16px; background: color-mix(in oklch, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-soft); }
+.topbar__logo { width: 34px; color: var(--text); }
+.topbar__logo svg, .side__logo svg { display: block; width: 100%; height: auto; }
+.topbar__title { font-weight: 600; }
+.topbar a { margin-left: auto; font-size: 14px; color: var(--muted); text-decoration: none; }
+.main { padding: 22px 16px 40px; max-width: 1100px; }
+.tabbar { position: fixed; inset: auto 0 0; z-index: 20; display: grid; grid-template-columns: repeat(5, 1fr); height: var(--tabbar); background: var(--surface); border-top: 1px solid var(--line); }
+.tabbar a { display: grid; place-items: center; align-content: center; gap: 2px; font-size: 11px; font-weight: 600; color: var(--faint); text-decoration: none; }
+.tabbar a i { font-size: 22px; }
+.tabbar a[aria-current="page"] { color: var(--text); }
+.tabbar a[aria-current="page"] i { color: var(--accent-ink); }
+@media (min-width: 1024px) {
+  .shell { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); padding-bottom: 0; }
+  .topbar, .tabbar { display: none; }
+  .side { position: sticky; top: 0; display: flex; flex-direction: column; height: 100dvh; padding: 24px 16px; border-right: 1px solid var(--line-soft); background: var(--surface); }
+  .side__logo { width: 150px; margin: 4px 8px 28px; color: var(--text); }
+  .side nav { display: grid; gap: 2px; }
+  .side nav a { display: flex; align-items: center; gap: 12px; min-height: 42px; padding: 0 12px; border-radius: var(--r); color: var(--muted); font-weight: 500; text-decoration: none; transition: background-color 160ms var(--ease-out), color 160ms; }
+  .side nav a i { font-size: 19px; }
+  .side nav a:hover { color: var(--text); background: color-mix(in oklch, var(--text) 4%, transparent); }
+  .side nav a[aria-current="page"] { color: var(--text); background: color-mix(in oklch, var(--text) 7%, transparent); box-shadow: inset 2px 0 0 var(--accent); }
+  .side__foot { margin-top: auto; display: grid; gap: 10px; padding: 0 8px; font-size: 13px; color: var(--faint); }
+  .side__foot a { color: var(--muted); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+  .main { padding: 36px 44px 64px; }
+}
+
+/* Page pieces */
+.page-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 24px; }
+.page-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(34px, 5vw, 52px); line-height: 0.95; }
+.page-sub { color: var(--muted); margin-top: 6px; }
+.panel { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--r); }
+.panel__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line-soft); }
+.panel__title { font-weight: 600; font-size: 16px; }
+.panel__body { padding: 16px 18px; }
+.grid { display: grid; gap: 16px; }
+/* Grid items default to min-width:auto, so the scrolling session picker would widen the column past the phone screen. */
+.grid > *, .panel, .main { min-width: 0; }
+@media (min-width: 1024px) { .grid--2 { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; } }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-bottom: 16px; background: var(--line-soft); border: 1px solid var(--line-soft); border-radius: var(--r); overflow: hidden; }
+.stat { padding: 14px 16px; background: var(--surface); }
+.stat__num { font-family: var(--font-display); font-weight: 800; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat__label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.tag { display: inline-flex; align-items: center; min-height: 22px; padding: 0 7px; border: 1px solid var(--line); border-radius: var(--r); font-size: 12px; font-weight: 600; color: var(--muted); }
+.tag--new { border-color: color-mix(in oklch, var(--accent-ink) 55%, transparent); color: var(--accent-ink); }
+.tag--ok { border-color: color-mix(in oklch, var(--ok) 50%, transparent); color: var(--ok); }
+.muted { color: var(--muted); }
+.alert { display: flex; align-items: start; gap: 12px; padding: 14px 16px; margin-bottom: 16px; border: 1px solid color-mix(in oklch, var(--accent-ink) 45%, transparent); border-radius: var(--r); background: color-mix(in oklch, var(--accent) 10%, var(--surface)); }
+.alert i { font-size: 20px; color: var(--accent-ink); margin-top: 2px; }
+.alert p { color: var(--muted); }
+.alert strong { color: var(--text); }
+.alert .btn { margin-left: auto; flex: none; }
+
+/* Attendees */
+.roster { list-style: none; margin: 0; padding: 0; }
+.roster li { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line-soft); }
+.roster li:last-child { border-bottom: 0; }
+.roster label { display: contents; cursor: pointer; }
+.roster input { appearance: none; width: 22px; height: 22px; margin: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); display: grid; place-items: center; cursor: pointer; }
+.roster input:checked { background: var(--ok); border-color: var(--ok); }
+.roster input:checked::after { content: ""; width: 10px; height: 6px; border-left: 2px solid var(--bg); border-bottom: 2px solid var(--bg); transform: translate(0, -1px) rotate(-45deg); }
+.roster__name { font-weight: 600; }
+.roster__meta { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.roster a { color: var(--muted); font-size: 20px; text-decoration: none; }
+.session-pick { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 14px; scrollbar-width: none; }
+.session-pick button { flex: none; min-height: 38px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r); background: transparent; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; }
+.session-pick button[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+.week { list-style: none; margin: 0; padding: 0; }
+.week li { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line-soft); font-size: 14px; }
+.week li:last-child { border-bottom: 0; }
+.fill { display: inline-flex; gap: 2px; }
+.fill span { width: 6px; height: 14px; background: var(--line); }
+.fill span.on { background: var(--text); }
+.fill span.on.full { background: var(--accent-ink); }
+
+/* Connections */
+.conns { display: grid; gap: 16px; }
+@media (min-width: 1024px) { .conns { grid-template-columns: repeat(2, minmax(0, 1fr)); } .conn--wide { grid-column: 1 / -1; } }
+.conn { display: grid; gap: 14px; padding: 20px; }
+.conn__top { display: flex; align-items: center; gap: 14px; }
+.conn__icon { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border: 1px solid var(--line); border-radius: var(--r); font-size: 26px; }
+.conn__name { font-weight: 600; font-size: 17px; }
+.conn__state { font-size: 13px; color: var(--muted); }
+.conn__state.is-on { color: var(--ok); font-weight: 600; }
+.conn p { color: var(--muted); }
+.perms { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+.perms li { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px; color: var(--muted); }
+.perms i { color: var(--text); margin-top: 3px; }
+.toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line-soft); font-size: 14px; cursor: pointer; }
+.toggle input { appearance: none; position: relative; flex: none; width: 40px; height: 22px; margin: 0; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); cursor: pointer; transition: background-color 200ms var(--ease-out); }
+.toggle input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 1px; background: var(--muted); transition: transform 220ms var(--ease-out); }
+.toggle input:checked { background: var(--accent); border-color: var(--accent); }
+.toggle input:checked::after { transform: translateX(18px); background: var(--on-accent); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 12px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+.search { flex: 1 1 220px; min-height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); }
+.chip { min-height: 38px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r); background: transparent; color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+.empty { padding: 28px 18px; color: var(--muted); }
+.empty strong { display: block; color: var(--text); margin-bottom: 4px; }
+
+/* Settings form */
+.form-grid { display: grid; gap: 16px; }
+@media (min-width: 768px) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 13px; font-weight: 600; }
+.field input, .field select { min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg); }
+.field small { color: var(--faint); font-size: 12px; }
+
+.view[hidden] { display: none; }
+.proto-badge { position: fixed; right: 12px; top: 64px; z-index: 30; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--r); background: color-mix(in oklch, var(--bg) 88%, transparent); font-size: 12px; font-weight: 600; color: var(--muted); pointer-events: none; }
+@media (min-width: 1024px) { .proto-badge { top: 16px; } }
+.toast { position: fixed; left: 50%; bottom: calc(var(--tabbar) + 16px); z-index: 60; padding: 12px 18px; border-radius: var(--r); background: var(--text); color: var(--bg); font-weight: 600; opacity: 0; transform: translate(-50%, 12px); transition: opacity 200ms var(--ease-out), transform 260ms var(--ease-out); pointer-events: none; }
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+@media (min-width: 1024px) { .toast { bottom: 24px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side" aria-label="Admina izvēlne">
+    <div class="side__logo"><span data-svg="assets/brand/manufit-logo-horizontal.svg"></span></div>
+    <nav>
+      <a href="#parskats" data-nav="parskats"><i class="ph ph-house"></i>Pārskats</a>
+      <a href="#grafiks" data-nav="grafiks"><i class="ph ph-calendar-blank"></i>Grafiks</a>
+      <a href="#pieraksti" data-nav="pieraksti"><i class="ph ph-users-three"></i>Pieraksti</a>
+      <a href="#savienojumi" data-nav="savienojumi"><i class="ph ph-plugs-connected"></i>Savienojumi</a>
+      <a href="#iestatijumi" data-nav="iestatijumi"><i class="ph ph-gear-six"></i>Iestatījumi</a>
+    </nav>
+    <div class="side__foot">
+      <a href="index.html"><i class="ph ph-arrow-square-out"></i>Skatīt lapu</a>
+      <span>Ielogojies ar Google kontu</span>
+    </div>
+  </aside>
+
+  <div>
+    <header class="topbar">
+      <span class="topbar__logo"><span data-svg="assets/brand/manufit-icon.svg"></span></span>
+      <span class="topbar__title" id="topbar-title">Pārskats</span>
+      <a href="index.html">Skatīt lapu</a>
+    </header>
+
+    <main class="main" id="main">
+      <!-- Overview -->
+      <section class="view" id="view-parskats" aria-labelledby="t-parskats">
+        <div class="page-head">
+          <div><h1 class="page-title" id="t-parskats">Pārskats</h1><p class="page-sub" id="today-label"></p></div>
+        </div>
+        <div class="alert" id="google-alert">
+          <i class="ph-bold ph-warning-circle" aria-hidden="true"></i>
+          <div><strong>Google vēl nav pieslēgts.</strong><p>Pieslēdz, lai treniņi parādītos tavā kalendārā un apstiprinājumi ietu no tava Gmail.</p></div>
+          <a class="btn btn--primary" href="#savienojumi">Pieslēgt</a>
+        </div>
+        <div class="stats" id="stats"></div>
+        <div class="grid grid--2">
+          <div class="panel">
+            <div class="panel__head"><h2 class="panel__title" id="roster-title">Nākamais treniņš</h2><span class="muted" id="roster-count"></span></div>
+            <div class="panel__body">
+              <div class="session-pick" id="session-pick" role="group" aria-label="Izvēlies treniņu"></div>
+              <ul class="roster" id="roster"></ul>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel__head"><h2 class="panel__title">Šonedēļ</h2><a class="muted" href="#grafiks">Grafiks</a></div>
+            <div class="panel__body"><ul class="week" id="week"></ul></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Connections -->
+      <section class="view" id="view-savienojumi" aria-labelledby="t-savienojumi" hidden>
+        <div class="page-head"><div><h1 class="page-title" id="t-savienojumi">Savienojumi</h1><p class="page-sub">Pieslēdz savus kontus vienreiz, un lapa strādās pati.</p></div></div>
+        <div class="conns">
+          <article class="panel conn conn--wide" data-conn="google">
+            <div class="conn__top"><span class="conn__icon"><i class="ph ph-google-logo"></i></span><div><h2 class="conn__name">Google kalendārs un Gmail</h2><p class="conn__state" data-state>Nav pieslēgts</p></div></div>
+            <p>Katrs treniņš parādās tavā Google kalendārā ar sarakstu, kas pieteicies. Apstiprinājumi klientiem tiek sūtīti no tava Gmail.</p>
+            <ul class="perms">
+              <li><i class="ph ph-calendar-check"></i>Kalendārs: izveido un atjaunina notikumus atsevišķā kalendārā "MANUFIT grafiks"</li>
+              <li><i class="ph ph-paper-plane-tilt"></i>Gmail: tikai sūta e-pastus, tavas vēstules netiek lasītas</li>
+            </ul>
+            <div data-settings hidden>
+              <label class="toggle">Pievienot treniņus kalendāram ar dalībnieku sarakstu<input type="checkbox" checked></label>
+              <label class="toggle">Sūtīt apstiprinājumus no Gmail<input type="checkbox" checked></label>
+              <label class="toggle">Atgādinājums klientiem 3 stundas pirms treniņa<input type="checkbox" checked></label>
+            </div>
+            <div><button class="btn btn--primary" type="button" data-connect>Pieslēgt Google kontu</button></div>
+          </article>
+          <article class="panel conn" data-conn="instagram">
+            <div class="conn__top"><span class="conn__icon"><i class="ph ph-instagram-logo"></i></span><div><h2 class="conn__name">Instagram</h2><p class="conn__state" data-state>Nav pieslēgts</p></div></div>
+            <p>Jaunākie posti un video automātiski parādās lapas sadaļā Kopiena. Vajadzīgs Business vai Creator konts.</p>
+            <div data-settings hidden>
+              <label class="toggle">Rādīt jaunākos video lapā<input type="checkbox" checked></label>
+              <label class="toggle">Paslēpt postus ar akcijām pēc to beigām<input type="checkbox"></label>
+            </div>
+            <div><button class="btn btn--primary" type="button" data-connect data-handle="@manufit_official">Pieslēgt Instagram</button></div>
+          </article>
+          <article class="panel conn" data-conn="facebook">
+            <div class="conn__top"><span class="conn__icon"><i class="ph ph-facebook-logo"></i></span><div><h2 class="conn__name">Facebook lapa</h2><p class="conn__state" data-state>Nav pieslēgts</p></div></div>
+            <p>Pasākumi un jaunumi no Facebook lapas parādās lapā, un jauni treniņi var tikt publicēti arī tur.</p>
+            <div data-settings hidden>
+              <label class="toggle">Rādīt Facebook pasākumus lapā<input type="checkbox" checked></label>
+            </div>
+            <div><button class="btn btn--primary" type="button" data-connect>Pieslēgt Facebook</button></div>
+          </article>
+        </div>
+        <p class="muted" style="margin-top:16px;font-size:13px">Prototips: pieslēgšana šeit tiek tikai imitēta, īsti konti netiek pieslēgti.</p>
+      </section>
+
+      <!-- Schedule templates -->
+      <section class="view" id="view-grafiks" aria-labelledby="t-grafiks" hidden>
+        <div class="page-head"><div><h1 class="page-title" id="t-grafiks">Grafiks</h1><p class="page-sub">Regulārie treniņi atkārtojas paši. Izmaiņas uzreiz redzamas lapā un tavā kalendārā.</p></div>
+          <button class="btn btn--primary" type="button" data-demo="Jauna treniņa forma tiks pievienota nākamajā versijā"><i class="ph-bold ph-plus"></i>Pievienot treniņu</button></div>
+        <div class="panel"><div class="table-wrap"><table>
+          <thead><tr><th>Treniņš</th><th>Dienas</th><th>Laiks</th><th>Vietas</th><th>Treneris</th><th></th></tr></thead>
+          <tbody id="templates"></tbody>
+        </table></div></div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel__head"><h2 class="panel__title">Izņēmumi</h2><button class="btn btn--ghost" type="button" data-demo="Atcelšanas forma tiks pievienota nākamajā versijā">Atcelt treniņu</button></div>
+          <div class="empty"><strong>Izņēmumu nav.</strong>Atcel treniņu vai pievieno brīvdienu, un tā uzreiz parādīsies lapā, klientiem tiks nosūtīts paziņojums.</div>
+        </div>
+      </section>
+
+      <!-- Bookings -->
+      <section class="view" id="view-pieraksti" aria-labelledby="t-pieraksti" hidden>
+        <div class="page-head"><div><h1 class="page-title" id="t-pieraksti">Pieraksti</h1><p class="page-sub">Visi pieteikumi no mājaslapas.</p></div>
+          <button class="btn btn--ghost" type="button" id="export"><i class="ph ph-download-simple"></i>Eksportēt CSV</button></div>
+        <div class="toolbar">
+          <input class="search" type="search" id="search" placeholder="Meklēt pēc vārda vai tālruņa" aria-label="Meklēt pierakstos">
+          <button class="chip" type="button" data-bfilter="all" aria-pressed="true">Visi</button>
+          <button class="chip" type="button" data-bfilter="new" aria-pressed="false">Pirmā reize</button>
+          <button class="chip" type="button" data-bfilter="wait" aria-pressed="false">Rindā</button>
+        </div>
+        <div class="panel"><div class="table-wrap"><table>
+          <thead><tr><th>Treniņš</th><th>Klients</th><th>Tālrunis</th><th>Statuss</th></tr></thead>
+          <tbody id="bookings"></tbody>
+        </table></div></div>
+      </section>
+
+      <!-- Settings -->
+      <section class="view" id="view-iestatijumi" aria-labelledby="t-iestatijumi" hidden>
+        <div class="page-head"><div><h1 class="page-title" id="t-iestatijumi">Iestatījumi</h1><p class="page-sub">Kontakti un pieraksta noteikumi, kas redzami lapā.</p></div></div>
+        <form class="panel panel__body" id="settings">
+          <div class="form-grid">
+            <div class="field"><label for="s-phone">Tālrunis lapā</label><input id="s-phone" type="tel" placeholder="Ieraksti numuru" autocomplete="off"></div>
+            <div class="field"><label for="s-email">E-pasts lapā</label><input id="s-email" type="email" placeholder="Ieraksti e-pastu" autocomplete="off"></div>
+            <div class="field"><label for="s-cancel">Atcelt var līdz</label><select id="s-cancel"><option>2 stundām pirms treniņa</option><option selected>4 stundām pirms treniņa</option><option>12 stundām pirms treniņa</option></select><small>Šis noteikums parādās pieteikuma formā un e-pastā.</small></div>
+            <div class="field"><label for="s-wait">Rindas vieta jāapstiprina</label><select id="s-wait"><option>30 minūšu laikā</option><option selected>1 stundas laikā</option><option>2 stundu laikā</option></select></div>
+            <div class="field"><label for="s-cap">Vietas grupu treniņā (noklusējums)</label><input id="s-cap" type="number" value="12" min="1" inputmode="numeric"></div>
+            <div class="field"><label for="s-kidscap">Vietas bērnu treniņā (noklusējums)</label><input id="s-kidscap" type="number" value="10" min="1" inputmode="numeric"></div>
+          </div>
+          <div style="margin-top:20px"><button class="btn btn--primary" type="submit">Saglabāt</button></div>
+        </form>
+      </section>
+    </main>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="Admina izvēlne">
+  <a href="#parskats" data-nav="parskats"><i class="ph ph-house"></i>Pārskats</a>
+  <a href="#grafiks" data-nav="grafiks"><i class="ph ph-calendar-blank"></i>Grafiks</a>
+  <a href="#pieraksti" data-nav="pieraksti"><i class="ph ph-users-three"></i>Pieraksti</a>
+  <a href="#savienojumi" data-nav="savienojumi"><i class="ph ph-plugs-connected"></i>Konti</a>
+  <a href="#iestatijumi" data-nav="iestatijumi"><i class="ph ph-gear-six"></i>Vairāk</a>
+</nav>
+
+<div class="proto-badge" aria-hidden="true">Prototips · demo dati</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+
+for (const holder of $$('[data-svg]')) {
+  fetch(holder.dataset.svg)
+    .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status} for ${holder.dataset.svg}`))))
+    .then((svg) => { holder.innerHTML = svg; })
+    .catch((err) => console.error('Logo failed to load:', err));
+}
+
+const toast = $('#toast');
+let toastTimer;
+function say(msg) {
+  toast.textContent = msg;
+  toast.classList.add('is-visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+}
+
+/* ---------- Demo data: same weekly pattern as the site, invented people ---------- */
+const PROGRAMS = {
+  group: { name: 'Grupu treniņš', cap: 12, days: 'P-Pk', coach: '' },
+  kids: { name: 'Bērnu treniņš 4-8', cap: 10, days: 'P, T', coach: '' },
+  youth: { name: 'Jauniešu treniņš 12-17', cap: 10, days: 'P, T, Pk', coach: 'Anna, Līva' },
+  sunday: { name: 'Svētdienas koptreniņš', cap: 20, days: 'Sv', coach: '' },
+};
+const WEEK = { 1: [['17:00', 'youth'], ['18:00', 'group'], ['18:00', 'kids']], 2: [['18:00', 'group']], 3: [['17:00', 'youth'], ['18:00', 'group'], ['18:00', 'kids']], 4: [['18:00', 'group']], 5: [['17:00', 'youth'], ['18:00', 'group']], 6: [], 0: [['10:30', 'sunday']] };
+const DAY_LONG = ['Svētdiena', 'Pirmdiena', 'Otrdiena', 'Trešdiena', 'Ceturtdiena', 'Piektdiena', 'Sestdiena'];
+const DAY_SHORT = ['Sv', 'P', 'O', 'T', 'C', 'Pk', 'S'];
+const MONTH = ['janvāris', 'februāris', 'marts', 'aprīlis', 'maijs', 'jūnijs', 'jūlijs', 'augusts', 'septembris', 'oktobris', 'novembris', 'decembris'];
+const ADULTS = ['Elīna V.', 'Dace O.', 'Rūta K.', 'Agnese P.', 'Sandis R.', 'Laura Z.', 'Inese T.', 'Kristaps L.', 'Madara S.', 'Zane B.', 'Evija M.', 'Toms A.', 'Liene D.', 'Signe J.', 'Artis G.', 'Baiba E.', 'Ieva Š.', 'Kaspars N.', 'Linda F.', 'Ilona C.'];
+const KIDS = ['Emīlija', 'Markuss', 'Sofija', 'Roberts', 'Alise', 'Kārlis', 'Paula', 'Daniels', 'Marta', 'Gustavs'];
+
+function seeded(str) { let h = 2166136261; for (const ch of str) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967295; }
+const now = new Date();
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const rel = (d) => { const n = Math.round((d - today) / 864e5); return n === 0 ? 'Šodien' : n === 1 ? 'Rīt' : DAY_LONG[d.getDay()]; };
+const phone = (seed) => `+371 2${String(Math.floor(seeded(seed) * 1e7)).padStart(7, '0').replace(/(\d{3})(\d{4})/, '$1 $2')}`;
+
+const sessions = [];
+for (let i = 0; i < 7; i++) {
+  const date = new Date(today); date.setDate(today.getDate() + i);
+  for (const [time, key] of WEEK[date.getDay()]) {
+    const p = PROGRAMS[key];
+    const id = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${time}-${key}`;
+    const [hh, mm] = time.split(':').map(Number);
+    const start = new Date(date); start.setHours(hh, mm);
+    const n = 1 + Math.round(seeded(id) * (p.cap - 6));
+    const pool = key === 'kids' || key === 'youth' ? KIDS : ADULTS;
+    const people = Array.from({ length: n }, (_, k) => {
+      const name = pool[(Math.floor(seeded(id + k) * pool.length) + k) % pool.length];
+      return { name, phone: phone(id + name), first: seeded(id + name + 'f') > 0.82, here: false, status: 'Apstiprināts' };
+    });
+    sessions.push({ id, key, ...p, date, start, time, people });
+  }
+}
+const upcoming = sessions.filter((s) => s.start > now);
+const waitSession = upcoming.find((s) => s.key === 'group');
+if (waitSession) { while (waitSession.people.length < waitSession.cap) waitSession.people.push({ name: ADULTS[waitSession.people.length], phone: phone(waitSession.id + waitSession.people.length), first: false, here: false, status: 'Apstiprināts' }); waitSession.people.push({ name: 'Ieva Š.', phone: phone('wait1'), first: true, here: false, status: 'Rindā' }); }
+
+/* ---------- Overview ---------- */
+$('#today-label').textContent = `${DAY_LONG[now.getDay()]}, ${now.getDate()}. ${MONTH[now.getMonth()]}`;
+function renderStats() {
+  const all = sessions.flatMap((s) => s.people.filter((p) => p.status === 'Apstiprināts'));
+  const firsts = all.filter((p) => p.first).length;
+  const seats = sessions.reduce((a, s) => a + s.cap, 0);
+  $('#stats').innerHTML = [
+    [all.length, 'pieraksti 7 dienās'],
+    [firsts, 'pirmo reizi'],
+    [`${Math.round((all.length / seats) * 100)}%`, 'vietu aizpildītas'],
+  ].map(([n, l]) => `<div class="stat"><p class="stat__num">${n}</p><p class="stat__label">${l}</p></div>`).join('');
+}
+let picked = (upcoming[0] || sessions[0]).id;
+function renderPick() {
+  $('#session-pick').innerHTML = upcoming.slice(0, 6).map((s) => `<button type="button" data-pick="${s.id}" aria-pressed="${s.id === picked}">${rel(s.date)} ${s.time}</button>`).join('');
+}
+function renderRoster() {
+  const s = sessions.find((x) => x.id === picked);
+  const confirmed = s.people.filter((p) => p.status === 'Apstiprināts');
+  $('#roster-title').textContent = `${s.name}, ${rel(s.date).toLowerCase()} ${s.time}`;
+  $('#roster-count').textContent = `${confirmed.length} no ${s.cap}`;
+  $('#roster').innerHTML = s.people.map((p, i) => `<li>
+      <input type="checkbox" id="p-${i}" data-here="${i}" ${p.here ? 'checked' : ''} ${p.status !== 'Apstiprināts' ? 'disabled' : ''} aria-label="Atzīmēt, ka ${p.name} ir ieradies">
+      <label for="p-${i}"><span><span class="roster__name">${p.name}</span><span class="roster__meta">${p.first ? '<span class="tag tag--new">1. reize</span>' : ''}${p.status === 'Rindā' ? '<span class="tag">Rindā</span>' : ''}<span>${p.phone}</span></span></span></label>
+      <a href="tel:${p.phone.replace(/\s/g, '')}" aria-label="Zvanīt ${p.name}"><i class="ph ph-phone"></i></a>
+    </li>`).join('');
+}
+function renderWeek() {
+  $('#week').innerHTML = sessions.map((s) => {
+    const n = s.people.filter((p) => p.status === 'Apstiprināts').length;
+    const bars = Array.from({ length: 10 }, (_, i) => `<span class="${i < Math.round((n / s.cap) * 10) ? 'on' : ''}${n >= s.cap ? ' full' : ''}"></span>`).join('');
+    return `<li><span>${DAY_SHORT[s.date.getDay()]} ${s.date.getDate()}. ${s.time}</span><span>${s.name}</span><span class="fill" aria-label="${n} no ${s.cap}" title="${n} no ${s.cap}">${bars}</span></li>`;
+  }).join('') || '<li>Šonedēļ treniņu nav.</li>';
+}
+$('#session-pick').addEventListener('click', (e) => { const b = e.target.closest('[data-pick]'); if (!b) return; picked = b.dataset.pick; renderPick(); renderRoster(); });
+$('#roster').addEventListener('change', (e) => {
+  const i = e.target.dataset.here; if (i === undefined) return;
+  const s = sessions.find((x) => x.id === picked);
+  s.people[i].here = e.target.checked;
+  say(e.target.checked ? `${s.people[i].name} atzīmēts kā ieradies` : `${s.people[i].name}: atzīme noņemta`);
+});
+
+/* ---------- Connections (simulated OAuth) ---------- */
+for (const card of $$('[data-conn]')) {
+  const btn = $('[data-connect]', card);
+  btn.addEventListener('click', () => {
+    if (card.dataset.connected) {
+      delete card.dataset.connected;
+      $('[data-state]', card).textContent = 'Nav pieslēgts';
+      $('[data-state]', card).classList.remove('is-on');
+      $('[data-settings]', card).hidden = true;
+      btn.className = 'btn btn--primary';
+      btn.textContent = btn.dataset.label;
+      if (card.dataset.conn === 'google') $('#google-alert').hidden = false;
+      say('Savienojums atvienots');
+      return;
+    }
+    btn.dataset.label = btn.dataset.label || btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Savieno...';
+    setTimeout(() => {
+      card.dataset.connected = '1';
+      btn.disabled = false;
+      btn.className = 'btn btn--ghost';
+      btn.textContent = 'Atvienot';
+      const state = $('[data-state]', card);
+      state.textContent = btn.dataset.handle ? `Pieslēgts: ${btn.dataset.handle}` : 'Pieslēgts, sinhronizēts tikko';
+      state.classList.add('is-on');
+      $('[data-settings]', card).hidden = false;
+      if (card.dataset.conn === 'google') $('#google-alert').hidden = true;
+      say('Pieslēgts (demo)');
+    }, 900);
+  });
+}
+
+/* ---------- Schedule templates ---------- */
+$('#templates').innerHTML = Object.entries(PROGRAMS).map(([key, p]) => {
+  const time = key === 'sunday' ? '10:30' : key === 'youth' ? '17:00' : '18:00';
+  return `<tr><td><strong>${p.name}</strong></td><td>${p.days}</td><td>${time}</td><td>${p.cap}</td><td>${p.coach || '<span class="muted">Nav norādīts</span>'}</td>
+    <td><button class="btn btn--ghost" type="button" data-demo="Rediģēšana tiks pievienota nākamajā versijā">Rediģēt</button></td></tr>`;
+}).join('');
+
+/* ---------- Bookings ---------- */
+const bookings = sessions.flatMap((s) => s.people.map((p) => ({ when: `${rel(s.date)} ${s.time}`, session: s.name, ...p })));
+let bfilter = 'all';
+function renderBookings() {
+  const q = $('#search').value.trim().toLowerCase();
+  const rows = bookings.filter((b) => (bfilter === 'all' || (bfilter === 'new' && b.first) || (bfilter === 'wait' && b.status === 'Rindā'))
+    && (!q || b.name.toLowerCase().includes(q) || b.phone.replace(/\s/g, '').includes(q.replace(/\s/g, ''))));
+  $('#bookings').innerHTML = rows.length ? rows.map((b) => `<tr><td>${b.when}<br><span class="muted">${b.session}</span></td>
+      <td>${b.name} ${b.first ? '<span class="tag tag--new">1. reize</span>' : ''}</td><td>${b.phone}</td>
+      <td><span class="tag ${b.status === 'Apstiprināts' ? 'tag--ok' : ''}">${b.status}</span></td></tr>`).join('')
+    : '<tr><td colspan="4"><div class="empty"><strong>Nekas netika atrasts.</strong>Pamēģini citu vārdu vai noņem filtru.</div></td></tr>';
+}
+$('#search').addEventListener('input', renderBookings);
+$$('[data-bfilter]').forEach((c) => c.addEventListener('click', () => {
+  bfilter = c.dataset.bfilter;
+  $$('[data-bfilter]').forEach((x) => x.setAttribute('aria-pressed', String(x === c)));
+  renderBookings();
+}));
+$('#export').addEventListener('click', () => {
+  const csv = ['Treniņš;Laiks;Klients;Tālrunis;Statuss;Pirmā reize', ...bookings.map((b) => [b.session, b.when, b.name, b.phone, b.status, b.first ? 'jā' : 'nē'].join(';'))].join('\r\n');
+  const url = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+  const a = Object.assign(document.createElement('a'), { href: url, download: 'manufit-pieraksti-demo.csv' });
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
+
+/* ---------- Settings + demo-only buttons ---------- */
+$('#settings').addEventListener('submit', (e) => { e.preventDefault(); say('Saglabāts (demo)'); });
+document.addEventListener('click', (e) => { const d = e.target.closest('[data-demo]'); if (d) say(d.dataset.demo); });
+
+/* ---------- Views ---------- */
+const TITLES = { parskats: 'Pārskats', grafiks: 'Grafiks', pieraksti: 'Pieraksti', savienojumi: 'Savienojumi', iestatijumi: 'Iestatījumi' };
+function route() {
+  const v = (location.hash || '#parskats').slice(1);
+  const view = TITLES[v] ? v : 'parskats';
+  $$('.view').forEach((el) => { el.hidden = el.id !== `view-${view}`; });
+  $$('[data-nav]').forEach((a) => (a.dataset.nav === view ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));
+  $('#topbar-title').textContent = TITLES[view];
+  scrollTo({ top: 0 });
+}
+addEventListener('hashchange', route);
+
+renderStats(); renderPick(); renderRoster(); renderWeek(); renderBookings(); route();
+</script>
+</body>
+</html>

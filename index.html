@@ -281,6 +281,10 @@ h1, h2, h3, p { margin: 0; }
 
 /* ---------- Booking sheet ---------- */
 dialog { padding: 0; border: 0; background: transparent; color: inherit; max-width: none; max-height: none; }
+/* Decorative videos never show native overlays (iOS Low Power Mode puts a big play button over a blocked autoplay). */
+.hero__video::-webkit-media-controls, .reel__media video::-webkit-media-controls,
+.hero__video::-webkit-media-controls-start-playback-button, .reel__media video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
+dialog:not([open]) { display: none; }
 dialog::backdrop { background: color-mix(in oklch, var(--bg) 72%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
 .sheet { position: fixed; inset: 0 0 0 auto; width: min(520px, 100%); height: 100dvh; margin: 0 0 0 auto; }
 /* overflow-wrap: visitor-typed text (long names, emails) must never widen the sheet. */
@@ -388,7 +392,7 @@ dialog::backdrop { background: color-mix(in oklch, var(--bg) 72%, transparent); 
   <!-- 1. Hero: split, real gym footage on the right -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__media">
-      <video class="hero__video" muted loop playsinline preload="auto" poster="assets/video/hero.jpg" aria-hidden="true">
+      <video class="hero__video" muted loop playsinline disableremoteplayback disablepictureinpicture preload="auto" poster="assets/video/hero.jpg" aria-hidden="true">
         <source src="assets/video/hero.mp4" type="video/mp4">
       </video>
     </div>
@@ -525,42 +529,42 @@ dialog::backdrop { background: color-mix(in oklch, var(--bg) 72%, transparent); 
     <div class="reels" id="reels" tabindex="0" aria-label="Video no MANUFIT Instagram">
       <figure class="reel" data-reveal style="--i:0">
         <button class="reel__media" type="button" data-src="assets/video/reel-beach.mp4" data-caption="Beach Games Liepāja 2026" aria-label="Atskaņot video: Beach Games Liepāja 2026">
-          <video muted playsinline loop preload="none" poster="assets/video/reel-beach.jpg"><source src="assets/video/reel-beach.mp4" type="video/mp4"></video>
+          <video muted playsinline loop disableremoteplayback disablepictureinpicture preload="none" poster="assets/video/reel-beach.jpg"><source src="assets/video/reel-beach.mp4" type="video/mp4"></video>
           <span class="reel__play" aria-hidden="true"><i class="ph-bold ph-play"></i></span>
         </button>
         <figcaption>Beach Games Liepāja 2026<span>Komanda uz pjedestāla</span></figcaption>
       </figure>
       <figure class="reel" data-reveal style="--i:1">
         <button class="reel__media" type="button" data-src="assets/video/reel-birthday.mp4" data-caption="Citāda dzimšanas diena" aria-label="Atskaņot video: Citāda dzimšanas diena">
-          <video muted playsinline loop preload="none" poster="assets/video/reel-birthday.jpg"><source src="assets/video/reel-birthday.mp4" type="video/mp4"></video>
+          <video muted playsinline loop disableremoteplayback disablepictureinpicture preload="none" poster="assets/video/reel-birthday.jpg"><source src="assets/video/reel-birthday.mp4" type="video/mp4"></video>
           <span class="reel__play" aria-hidden="true"><i class="ph-bold ph-play"></i></span>
         </button>
         <figcaption>Citāda dzimšanas diena<span>Jaunais gads sākas zālē</span></figcaption>
       </figure>
       <figure class="reel" data-reveal style="--i:2">
         <button class="reel__media" type="button" data-src="assets/video/reel-kids.mp4" data-caption="Bērni un vecāki kopā" aria-label="Atskaņot video: Bērni un vecāki kopā">
-          <video muted playsinline loop preload="none" poster="assets/video/reel-kids.jpg"><source src="assets/video/reel-kids.mp4" type="video/mp4"></video>
+          <video muted playsinline loop disableremoteplayback disablepictureinpicture preload="none" poster="assets/video/reel-kids.jpg"><source src="assets/video/reel-kids.mp4" type="video/mp4"></video>
           <span class="reel__play" aria-hidden="true"><i class="ph-bold ph-play"></i></span>
         </button>
         <figcaption>Bērni un vecāki kopā<span>Pirmais kopīgais treniņš</span></figcaption>
       </figure>
       <figure class="reel" data-reveal style="--i:3">
         <button class="reel__media" type="button" data-src="assets/video/reel-cake.mp4" data-caption="Arī šādi var sagriezt kūku" aria-label="Atskaņot video: Arī šādi var sagriezt kūku">
-          <video muted playsinline loop preload="none" poster="assets/video/reel-cake.jpg"><source src="assets/video/reel-cake.mp4" type="video/mp4"></video>
+          <video muted playsinline loop disableremoteplayback disablepictureinpicture preload="none" poster="assets/video/reel-cake.jpg"><source src="assets/video/reel-cake.mp4" type="video/mp4"></video>
           <span class="reel__play" aria-hidden="true"><i class="ph-bold ph-play"></i></span>
         </button>
         <figcaption>Arī šādi var sagriezt kūku<span>Svētki pie stieņa</span></figcaption>
       </figure>
       <figure class="reel" data-reveal style="--i:4">
         <button class="reel__media" type="button" data-src="assets/video/reel-run.mp4" data-caption="21 km saules un pozitīvisma" aria-label="Atskaņot video: 21 km saules un pozitīvisma">
-          <video muted playsinline loop preload="none" poster="assets/video/reel-run.jpg"><source src="assets/video/reel-run.mp4" type="video/mp4"></video>
+          <video muted playsinline loop disableremoteplayback disablepictureinpicture preload="none" poster="assets/video/reel-run.jpg"><source src="assets/video/reel-run.mp4" type="video/mp4"></video>
           <span class="reel__play" aria-hidden="true"><i class="ph-bold ph-play"></i></span>
         </button>
         <figcaption>21 km saules un pozitīvisma<span>Skrienam kopā</span></figcaption>
       </figure>
       <figure class="reel" data-reveal style="--i:5">
         <button class="reel__media" type="button" data-src="assets/video/reel-opening.mp4" data-caption="Tiekamies treniņos" aria-label="Atskaņot video: Tiekamies treniņos">
-          <video muted playsinline loop preload="none" poster="assets/video/reel-opening.jpg"><source src="assets/video/reel-opening.mp4" type="video/mp4"></video>
+          <video muted playsinline loop disableremoteplayback disablepictureinpicture preload="none" poster="assets/video/reel-opening.jpg"><source src="assets/video/reel-opening.mp4" type="video/mp4"></video>
           <span class="reel__play" aria-hidden="true"><i class="ph-bold ph-play"></i></span>
         </button>
         <figcaption>Tiekamies treniņos<span>Kur viss sākās, 2024</span></figcaption>
